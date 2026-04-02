@@ -44,6 +44,3 @@ End-to-end customer onboarding script. Prompts for customer name, Azure location
 .\New-Customer.ps1
 ```
 
-### `New-CustomerRepo.ps1` / `Prep-CustomerEnvironment.ps1`
-
-Legacy scripts (predecessor to `New-Customer.ps1`). Kept for reference — use `New-Customer.ps1` instead.
