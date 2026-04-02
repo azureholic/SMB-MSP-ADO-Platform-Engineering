@@ -1,0 +1,42 @@
+parameters:
+- name: serviceConnection
+  type: string
+- name: resourceGroupName
+  type: string
+- name: location
+  type: string
+- name: parameterFile
+  type: string
+
+stages:
+- stage: Deploy
+  displayName: Deploy Azure resources
+  jobs:
+  - job: DeployBicep
+    displayName: Deploy shared Bicep template
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+    - checkout: self
+      path: s/customer
+
+    - checkout: templates
+      path: s/templates
+
+    - task: AzureCLI@2
+      displayName: Create resource group and deploy template
+      inputs:
+        azureSubscription: ${{ parameters.serviceConnection }}
+        scriptType: bash
+        scriptLocation: inlineScript
+        inlineScript: |
+          set -euo pipefail
+
+          az group create \
+            --name "${{ parameters.resourceGroupName }}" \
+            --location "${{ parameters.location }}"
+
+          az deployment group create \
+            --resource-group "${{ parameters.resourceGroupName }}" \
+            --template-file "$(Pipeline.Workspace)/s/templates/infra/main.bicep" \
+            --parameters "$(Pipeline.Workspace)/s/customer/${{ parameters.parameterFile }}"

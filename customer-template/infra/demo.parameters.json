@@ -1,0 +1,23 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+  "contentVersion": "1.0.0.0",
+  "parameters": {
+    "location": {
+      "value": "__LOCATION__"
+    },
+    "vnetName": {
+      "value": "vnet-__CUSTOMER_NAME__-demo"
+    },
+    "vnetAddressPrefix": {
+      "value": "10.10.0.0/16"
+    },
+    "subnets": {
+      "value": [
+        {
+          "name": "snet-__CUSTOMER_NAME__-demo",
+          "addressPrefix": "10.10.1.0/24"
+        }
+      ]
+    }
+  }
+}

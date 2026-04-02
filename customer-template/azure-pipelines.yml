@@ -1,0 +1,22 @@
+resources:
+  repositories:
+  - repository: templates
+    type: git
+    name: platform-engineering/shared-templates
+    # Uncomment ref to pin a specific version of the shared templates.
+    # Supports tags (refs/tags/v1.0.0), branches (refs/heads/main), or commit SHAs.
+    # Without ref, the default branch of the shared-templates repo is used.
+    # ref: refs/tags/v1.0.0
+
+trigger:
+- main
+
+pr: none
+
+extends:
+  template: azure-pipelines.yml@templates
+  parameters:
+    serviceConnection: __SERVICE_CONNECTION__
+    resourceGroupName: rg-__CUSTOMER_NAME__-demo
+    location: __LOCATION__
+    parameterFile: infra/demo.parameters.json
